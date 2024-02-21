@@ -1,2 +1,6 @@
 upload_channels:
   - sfe1ed40
+
+channels:
+    - https://staging.continuum.io/prefect/fs/janus-feedstock/pr2/12afd44
+    - https://staging.continuum.io/prefect/fs/azure-mgmt-storage-feedstock/pr2/eb9f9ea
