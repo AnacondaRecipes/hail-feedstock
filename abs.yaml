@@ -6,3 +6,6 @@ channels:
     - https://staging.continuum.io/prefect/fs/azure-mgmt-storage-feedstock/pr2/eb9f9ea
     - https://staging.continuum.io/prefect/fs/humanize-feedstock/pr8/23f24f0
     - https://staging.continuum.io/prefect/fs/nest-asyncio-feedstock/pr7/fdde43d
+    - https://staging.continuum.io/prefect/fs/parsimonious-feedstock/pr2/f47c443
+    - https://staging.continuum.io/prefect/fs/jproperties-feedstock/pr2/363084a
+
