@@ -4,3 +4,5 @@ upload_channels:
 channels:
     - https://staging.continuum.io/prefect/fs/janus-feedstock/pr2/12afd44
     - https://staging.continuum.io/prefect/fs/azure-mgmt-storage-feedstock/pr2/eb9f9ea
+    - https://staging.continuum.io/prefect/fs/humanize-feedstock/pr8/23f24f0
+    - https://staging.continuum.io/prefect/fs/nest-asyncio-feedstock/pr7/fdde43d
