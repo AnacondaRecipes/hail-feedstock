@@ -74,12 +74,22 @@ test:
 
 about:
   home: https://hail.is
-  dev_url: https://github.com/hail-is/hail
   license: MIT
   license_file: LICENSE
+  license_family: MIT
   summary: |
     Hail is Python-based data analysis tool for working with genomic data.
+  description: |
+    Hail is an open-source, general-purpose, Python-based data analysis 
+    tool with additional data types and methods for working with genomic data.
 
+    Hail is built to scale and has first-class support for multi-dimensional
+    structured data, like the genomic data in a genome-wide association study (GWAS).
+
+    Hail is exposed as a Python library, using primitives for distributed queries and
+    linear algebra implemented in Scala, Spark, and increasingly C++.
+  dev_url: https://github.com/hail-is/hail
+  doc_url: https://hail.is/docs/0.2/
 extra:
   skip-lints:
     - uses_vcs_url
