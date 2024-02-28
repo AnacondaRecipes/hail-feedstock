@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  git_url: https://github.com/hail-is/hail.git
-  git_rev: {{ version }}
+  url: https://github.com/hail-is/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: def7eb3e17d15bbb3dfba00dfc8a966771b839b04b639386ee61c8927d0c7ae8
 
 build:
   number: 0
@@ -89,9 +89,9 @@ about:
     Hail is exposed as a Python library, using primitives for distributed queries and
     linear algebra implemented in Scala, Spark, and increasingly C++.
   dev_url: https://github.com/hail-is/hail
-  doc_url: https://hail.is/docs/0.2/
+  doc_url: https://hail.is/docs/0.2/index.html
 extra:
   skip-lints:
-    - uses_vcs_url
+    - host_section_needs_exact_pinnings
   recipe-maintainers:
     - raivivek
