@@ -1,0 +1,71 @@
+From 350966f397a684e911241026d20a65da053a5873 Mon Sep 17 00:00:00 2001
+From: Lorenzo Pirritano <lpirritano@anaconda.com>
+Date: Mon, 4 Mar 2024 14:29:24 -0600
+Subject: [PATCH] remove vendored libsimdpp
+
+---
+ hail/src/main/c/Makefile | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
+
+diff --git a/hail/src/main/c/Makefile b/hail/src/main/c/Makefile
+index d750ca09e..645d347bc 100644
+--- a/hail/src/main/c/Makefile
++++ b/hail/src/main/c/Makefile
+@@ -25,8 +25,7 @@ CATCH_HEADER_LOCATION := ../resources/include/catch.hpp
+ 
+ # before libsimdpp and catch.hpp are downloaded, clang -MG -MM will generate
+ # unresolved dependencies
+-.PHONY: simdpp/simd.h catch.hpp
+-simdpp/simd.h: $(LIBSIMDPP)
++.PHONY: catch.hpp
+ catch.hpp: $(CATCH_HEADER_LOCATION)
+ 
+ 
+@@ -70,7 +69,7 @@ ifneq ($(WARNFLAGS),)
+ endif
+ 
+ # Append to any inherited flags which survived filtering
+-CXXFLAGS += $(HAIL_OPT_FLAGS) $(CXXSTD) -I$(LIBSIMDPP) -Wall -Wextra
++CXXFLAGS += $(HAIL_OPT_FLAGS) $(CXXSTD) -I$(PREFIX)/include/$(LIBSIMDPP) -Wall -Wextra
+ CXXFLAGS += -fPIC -ggdb -fno-strict-aliasing
+ CXXFLAGS += -I../resources/include -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/$(JAVA_MD)
+ LIBFLAGS += -fvisibility=default
+@@ -215,11 +214,11 @@ endif
+ 	echo "CXX is $(CXX)"
+ 	-$(CXX) --version
+ 
+-$(BUILD_X86_64)/functional-tests: ibs.cpp test.cpp $(LIBSIMDPP)
++$(BUILD_X86_64)/functional-tests: ibs.cpp test.cpp
+ 	@mkdir -p $(@D)
+ 	$(CXX) $(CXXFLAGS) -DNUMBER_OF_GENOTYPES_PER_ROW=256 -o $(BUILD_X86_64)/functional-tests ibs.cpp test.cpp
+ 
+-$(BUILD_ARM64)/functional-tests: ibs.cpp test.cpp $(LIBSIMDPP)
++$(BUILD_ARM64)/functional-tests: ibs.cpp test.cpp
+ 	@mkdir -p $(@D)
+ 	$(CXX) $(CXXFLAGS) -DNUMBER_OF_GENOTYPES_PER_ROW=256 -o $(BUILD_ARM64)/functional-tests ibs.cpp test.cpp
+ 
+@@ -259,7 +258,7 @@ benchmark: $(BUILD_NATIVE)/unit-tests
+ 			esac
+ 
+ clean:
+-	-rm -rf $(BUILD) $(LIBSIMDPP) lib
++	-rm -rf $(BUILD) lib
+ 
+ # We take all headers files visible to dynamic-generated code, together with
+ # the output of "$(CXX) --version", to give a checksum $(ALL_HEADER_CKSUM)
+@@ -283,12 +282,6 @@ $(CATCH_HEADER_LOCATION):
+ 	@mkdir -p $(@D)
+ 	curl -sSL 'https://github.com/catchorg/Catch2/releases/download/v2.6.0/catch.hpp' > $@
+ 
+-$(LIBSIMDPP).tar.gz:
+-	curl -sSL https://storage.googleapis.com/hail-common/$@ > $@
+-
+-$(LIBSIMDPP): $(LIBSIMDPP).tar.gz
+-	tar -xzf $<
+-
+ ifeq ($(UNAME_S)-$(UNAME_M),Darwin-arm64)
+ $(LIBBOOT_X86_64): $(BUILD_X86_64)/NativeBoot.o
+ 	@mkdir -p $(dir $@)
+-- 
+2.39.1
+

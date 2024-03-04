@@ -1,2 +1,5 @@
 upload_channels:
   - sfe1ed40
+
+channels:  
+  - https://staging.continuum.io/prefect/fs/libsimdpp-feedstock/pr2/6a58062

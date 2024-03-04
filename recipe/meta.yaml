@@ -10,6 +10,8 @@ source:
   # (e.g. version)
   git_url: https://github.com/hail-is/hail.git
   git_rev: {{ version }}
+  patches:
+    - patches/0001-remove-vendored-libsimdpp.patch
 
 build:
   number: 0
@@ -22,6 +24,8 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - make  # [linux]
+    - patch     # [not win]
+    - m2-patch  # [win]
     # - rsync
     # - setuptools
     # - pytest-runner
@@ -105,6 +109,8 @@ requirements:
     - requests <3,>=2.31.0
     - scipy <1.12,>1.2
     - uvloop <1,>=0.19.0  # [not win]
+    # because pkg_resources is needed
+    - setuptools
 
 test:
   imports:
