@@ -12,19 +12,20 @@ source:
   git_rev: {{ version }}
   patches:
     - patches/0001-remove-vendored-libsimdpp.patch
+    - patches/0002-remove-vendored-catch2.patch
 
 build:
   number: 0
   # avro and others a not available for win
   # openjdk and pyspark not available for s390x
   skip: true  # [py<39 or win or py>311 or s390x]
-  # entry_points:
-  #   - hailctl = hailtop.hailctl.__main__:main
+  entry_points:
+    - hailctl = hailtop.hailctl.__main__:main
 
 requirements:
   build:
     - {{ compiler('cxx') }}
-    - make  # [linux]
+    - make      # [linux]
     - patch     # [not win]
     - m2-patch  # [win]
     - git
@@ -36,8 +37,10 @@ requirements:
     - pyspark >=3.3.2,<=3.4.1
     - openjdk 11.*
     - lz4
+    # libsimdpp and catch2 unvendored dependencies
     - libsimdpp
-    # hailctl build needs these here
+    - catch2
+    # hail build needs these here to build hailtop/hailctl
     - aiodns >=2.0.0,<3
     - aiohttp >=3.9,<4
     - azure-identity >=1.6.0,<2
@@ -136,5 +139,6 @@ about:
 extra:
   skip-lints:
     - host_section_needs_exact_pinnings
+    - python_build_tool_in_run
   recipe-maintainers:
     - raivivek

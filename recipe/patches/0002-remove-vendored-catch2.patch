@@ -1,0 +1,36 @@
+From 2d511977a026e02845ea541d073c08be1d7ebb64 Mon Sep 17 00:00:00 2001
+From: Lorenzo Pirritano <lpirritano@anaconda.com>
+Date: Mon, 4 Mar 2024 19:31:50 -0600
+Subject: [PATCH] remove vendored catch2
+
+---
+ hail/src/main/c/Makefile | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/hail/src/main/c/Makefile b/hail/src/main/c/Makefile
+index 645d347bc..bcf67739f 100644
+--- a/hail/src/main/c/Makefile
++++ b/hail/src/main/c/Makefile
+@@ -21,7 +21,7 @@ endif
+ # Change this setting to update the version of libsimdpp
+ LIBSIMDPP := libsimdpp-2.1
+ 
+-CATCH_HEADER_LOCATION := ../resources/include/catch.hpp
++CATCH_HEADER_LOCATION := $(PREFIX)/include/catch2/catch.hpp
+ 
+ # before libsimdpp and catch.hpp are downloaded, clang -MG -MM will generate
+ # unresolved dependencies
+@@ -278,10 +278,6 @@ $(BUILD_ARM64)/NativeModule.o: NativeModule.cpp
+ 	@mkdir -p $(@D)
+ 	$(CXX) $(CXXFLAGS_ARM64) -DALL_HEADER_CKSUM=$(ALL_HEADER_CKSUM)UL -c NativeModule.cpp -o $@
+ 
+-$(CATCH_HEADER_LOCATION):
+-	@mkdir -p $(@D)
+-	curl -sSL 'https://github.com/catchorg/Catch2/releases/download/v2.6.0/catch.hpp' > $@
+-
+ ifeq ($(UNAME_S)-$(UNAME_M),Darwin-arm64)
+ $(LIBBOOT_X86_64): $(BUILD_X86_64)/NativeBoot.o
+ 	@mkdir -p $(dir $@)
+-- 
+2.39.1
+
