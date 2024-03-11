@@ -13,6 +13,7 @@ source:
   patches:
     - patches/0001-remove-vendored-libsimdpp.patch
     - patches/0002-remove-vendored-catch2.patch
+    - patches/0003-patch-requirements.patch
 
 build:
   number: 0
@@ -117,6 +118,10 @@ test:
   imports:
     - hail
     - hailtop.batch
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://hail.is

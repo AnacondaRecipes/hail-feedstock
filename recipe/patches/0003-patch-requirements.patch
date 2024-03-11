@@ -1,0 +1,42 @@
+From 2b10a6a6f90fd0d97456edc6bfe540ce8b3705a2 Mon Sep 17 00:00:00 2001
+From: Lorenzo Pirritano <lpirritano@anaconda.com>
+Date: Mon, 11 Mar 2024 13:14:13 -0600
+Subject: [PATCH] patch requirements
+
+---
+ hail/python/hailtop/requirements.txt | 4 ++--
+ hail/python/requirements.txt         | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/hail/python/hailtop/requirements.txt b/hail/python/hailtop/requirements.txt
+index a7d7f2f18..d3fe9eb63 100644
+--- a/hail/python/hailtop/requirements.txt
++++ b/hail/python/hailtop/requirements.txt
+@@ -13,8 +13,8 @@ humanize>=1.0.0,<2
+ janus>=0.6,<1.1
+ nest_asyncio>=1.5.8,<2
+ orjson>=3.6.4,<4
+-protobuf==3.20.2
+-rich>=12.6.0,<13
++protobuf==3.20.3
++rich>=12.5.0,<13
+ typer>=0.9.0,<1
+ python-json-logger>=2.0.2,<3
+ pyyaml>=6.0,<7.0
+diff --git a/hail/python/requirements.txt b/hail/python/requirements.txt
+index 4c53c351b..d6a732731 100644
+--- a/hail/python/requirements.txt
++++ b/hail/python/requirements.txt
+@@ -10,7 +10,7 @@ numpy<2
+ pandas>=2,<3
+ parsimonious<1
+ plotly>=5.18.0,<6
+-protobuf==3.20.2
+-pyspark>=3.3.2,<3.4
++protobuf==3.20.3
++pyspark>=3.3.2,<=3.4.1
+ requests>=2.31.0,<3
+ scipy>1.2,<1.12
+-- 
+2.39.1
+
