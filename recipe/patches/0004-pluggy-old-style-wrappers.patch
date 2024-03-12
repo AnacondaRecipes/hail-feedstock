@@ -1,0 +1,44 @@
+From 95952cebf8730a0c8f6adfc69bf4466fcafcf0ee Mon Sep 17 00:00:00 2001
+From: Lorenzo Pirritano <lpirritano@anaconda.com>
+Date: Tue, 12 Mar 2024 07:41:39 -0600
+Subject: [PATCH] pluggy old-style wrappers
+
+Our version of pluggy is old (1.0.0) and does not support the new
+style of wrappers (introduced in >=1.1.0, where 1.1.0 is yanked).
+
+This patch changes this wrapper to an old-style wrapper.
+
+See: https://pluggy.readthedocs.io/en/stable/index.html#old-style-wrappers
+
+---
+ hail/python/test/hail/conftest.py | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/hail/python/test/hail/conftest.py b/hail/python/test/hail/conftest.py
+index 3423e6919..b84bb8fea 100644
+--- a/hail/python/test/hail/conftest.py
++++ b/hail/python/test/hail/conftest.py
+@@ -59,12 +59,17 @@ def reset_randomness(init_hail):
+ test_results_key = StashKey[Dict[str, CollectReport]]()
+ 
+ 
+-@pytest.hookimpl(wrapper=True, tryfirst=True)
++@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+ def pytest_runtest_makereport(item, call):
+     # from: https://docs.pytest.org/en/latest/example/simple.html#making-test-result-information-available-in-fixtures
+     report = yield
+-    item.stash.setdefault(test_results_key, {})[report.when] = report
+-    return report
++    try:
++        rep = report.get_result()
++    except BaseException as e:
++        report.force_exception(e)
++        return
++    item.stash.setdefault(test_results_key, {})[rep.when] = rep
++    report.force_result(rep)
+ 
+ 
+ @pytest.fixture(autouse=True)
+-- 
+2.39.1
+
