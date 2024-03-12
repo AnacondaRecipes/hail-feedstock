@@ -1,0 +1,106 @@
+From ad278eab6414ebfd865dd3abf72a5a0ef533cec3 Mon Sep 17 00:00:00 2001
+From: Lorenzo Pirritano <lpirritano@anaconda.com>
+Date: Tue, 12 Mar 2024 11:38:20 -0600
+Subject: [PATCH] patch spark 3.3.2 to 3.4.1
+
+Pin the version of spark to 3.4.1
+
+This change requires an update of breezeVersion to 2.1.0 anaconda
+update some Scala code.
+
+See: https://github.com/hail-is/hail/issues/13971
+
+In particular: https://github.com/hail-is/hail/issues/13971#issuecomment-1792870445
+
+---
+ batch/Dockerfile.worker                       | 2 +-
+ batch/jvm-entryway/build.gradle               | 2 +-
+ hail/build.gradle                             | 7 ++-----
+ hail/src/main/scala/is/hail/HailContext.scala | 4 ++--
+ hail/version.mk                               | 2 +-
+ 5 files changed, 7 insertions(+), 10 deletions(-)
+
+diff --git a/batch/Dockerfile.worker b/batch/Dockerfile.worker
+index 5fa4599b0..e8a4f9d39 100644
+--- a/batch/Dockerfile.worker
++++ b/batch/Dockerfile.worker
+@@ -51,7 +51,7 @@ RUN hail-pip-install \
+     -r hailtop-requirements.txt \
+     -r gear-requirements.txt \
+     -r batch-requirements.txt \
+-    pyspark==3.3.2
++    pyspark==3.4.1
+ 
+ ENV SPARK_HOME /usr/local/lib/python3.9/dist-packages/pyspark
+ ENV PATH "$PATH:$SPARK_HOME/sbin:$SPARK_HOME/bin"
+diff --git a/batch/jvm-entryway/build.gradle b/batch/jvm-entryway/build.gradle
+index 3df60b959..1087b92a8 100644
+--- a/batch/jvm-entryway/build.gradle
++++ b/batch/jvm-entryway/build.gradle
+@@ -17,7 +17,7 @@ repositories {
+ }
+ 
+ project.ext {
+-    sparkVersion = System.getProperty("spark.version", "3.3.2")
++    sparkVersion = System.getProperty("spark.version", "3.4.1")
+     scalaVersion = System.getProperty("scala.version", "2.12.18")
+ }
+ 
+diff --git a/hail/build.gradle b/hail/build.gradle
+index 64041f9b4..6d2b82c8d 100644
+--- a/hail/build.gradle
++++ b/hail/build.gradle
+@@ -42,13 +42,10 @@ tasks.withType(JavaCompile) {
+ }
+ 
+ project.ext {
+-    breezeVersion = "1.1"
++    breezeVersion = "2.1.0"
+ 
+-    sparkVersion = System.getProperty("spark.version", "3.3.2")
++    sparkVersion = System.getProperty("spark.version", "3.4.1")
+ 
+-    if (sparkVersion != "3.3.2") {
+-        project.logger.lifecycle("WARNING: Hail primarily tested with Spark 3.3.2, use other versions at your own risk.")
+-    }
+     scalaVersion = System.getProperty("scala.version", "2.12.18")
+     scalaMajorVersion = (scalaVersion =~ /^\d+.\d+/)[0]
+     assert(scalaMajorVersion == "2.12")
+diff --git a/hail/src/main/scala/is/hail/HailContext.scala b/hail/src/main/scala/is/hail/HailContext.scala
+index d1c39238d..2dc459fd4 100644
+--- a/hail/src/main/scala/is/hail/HailContext.scala
++++ b/hail/src/main/scala/is/hail/HailContext.scala
+@@ -118,7 +118,7 @@ object HailContext {
+ 
+     {
+       import breeze.linalg._
+-      import breeze.linalg.operators.{BinaryRegistry, OpMulMatrix}
++      import breeze.linalg.operators.{BinaryRegistry, HasOps, OpMulMatrix}
+ 
+       implicitly[BinaryRegistry[
+         DenseMatrix[Double],
+@@ -126,7 +126,7 @@ object HailContext {
+         OpMulMatrix.type,
+         DenseVector[Double],
+       ]].register(
+-        DenseMatrix.implOpMulMatrix_DMD_DVD_eq_DVD
++        HasOps.impl_OpMulMatrix_DMD_DVD_eq_DVD
+       )
+     }
+ 
+diff --git a/hail/version.mk b/hail/version.mk
+index e166a09ed..e0d823025 100644
+--- a/hail/version.mk
++++ b/hail/version.mk
+@@ -14,7 +14,7 @@ $(error "git rev-parse --abbrev-ref HEAD" failed to produce output)
+ endif
+ 
+ SCALA_VERSION ?= 2.12.18
+-SPARK_VERSION ?= 3.3.2
++SPARK_VERSION ?= 3.4.1
+ HAIL_MAJOR_MINOR_VERSION := 0.2
+ HAIL_PATCH_VERSION := 127
+ HAIL_PIP_VERSION := $(HAIL_MAJOR_MINOR_VERSION).$(HAIL_PATCH_VERSION)
+-- 
+2.39.1
+

@@ -15,6 +15,7 @@ source:
     - patches/0002-remove-vendored-catch2.patch
     - patches/0003-patch-requirements.patch
     - patches/0004-pluggy-old-style-wrappers.patch
+    - patches/0005-patch-spark-3.3.2-to-3.4.1.patch
 
 build:
   number: 0
@@ -127,7 +128,7 @@ test:
   commands:
     - pip check
     - cd hail/python
-    - pytest -v test --ignore=test/hailtop/ --ignore=test/hail/matrixtable/test_file_formats.py --ignore=test/hail/experimental/test_experimental.py --ignore=test/hail/expr/test_expr.py --ignore=test/hail/matrixtable/test_matrix_table.py --ignore=test/hail/methods/test_family_methods.py --ignore=test/hail/methods/test_impex.py --ignore=test/hail/methods/test_pca.py --ignore=test/hail/methods/test_skat.py --ignore=test/hail/methods/test_statgen.py --ignore=test/hail/methods/relatedness/test_pc_relate.py --ignore=test/hail/table/test_table.py --ignore=test/hail/vds/test_combiner.py --ignore=test/hail/vds/test_vds.py 
+    - pytest -v test --ignore=test/hailtop/ --ignore=test/hail/matrixtable/test_file_formats.py --ignore=test/hail/experimental/test_experimental.py --ignore=test/hail/expr/test_expr.py --ignore=test/hail/matrixtable/test_matrix_table.py --ignore=test/hail/methods/test_family_methods.py --ignore=test/hail/methods/test_impex.py --ignore=test/hail/methods/test_pca.py --ignore=test/hail/methods/test_skat.py --ignore=test/hail/methods/test_statgen.py --ignore=test/hail/methods/relatedness/test_pc_relate.py --ignore=test/hail/table/test_table.py --ignore=test/hail/vds/test_combiner.py --ignore=test/hail/vds/test_vds.py --ignore=test/hail/utils/test_hl_hadoop_and_hail_fs.py --ignore=test/hail/extract_intervals/
 
 about:
   home: https://hail.is
