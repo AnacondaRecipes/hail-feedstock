@@ -116,6 +116,22 @@ requirements:
     # because pkg_resources is needed
     - setuptools
 
+# skip tests that require a backend or datafiles
+{% set tests_to_skip = "test_hadoop_ or test_annotate_intervals_ or test_verify_biallelic or test_table_filter_intervals" %}
+{% set tests_to_skip = tests_to_skip + " or test_matrix_filter_intervals or test_filter_intervals_compound_key" %}
+{% set tests_to_skip = tests_to_skip + " or test_export_rectangles or test_sparsify_band_ or test_row_intervals_1 or test_sparsify_row_intervals_0" %}
+{% set tests_to_skip = tests_to_skip + " or test_parses or test_tlocus_schema_from_rg_matches_scala or test_requester_pays_" %}
+{% set tests_to_skip = tests_to_skip + " or test_pedigree or test_slices_with_sparsify or test_exceptions_from_workers_have_stack_traces" %}
+{% set tests_to_skip = tests_to_skip + " or test_hail_in_notebook or test_pgenchisq" %}
+# ignore test files that require a backend or datafiles
+{% set testfiles_to_ignore = "--ignore=test/hail/genetics/test_reference_genome.py --ignore=test/hail/methods/test_king.py --ignore=test/hail/methods/test_simulation.py" %}
+{% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/methods/relatedness/test_identity_by_descent.py --ignore=test/hail/methods/test_qc.py --ignore=test/hailtop/" %}
+{% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/matrixtable/test_file_formats.py --ignore=test/hail/experimental/test_experimental.py --ignore=test/hail/expr/test_expr.py" %}
+{% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/matrixtable/test_matrix_table.py --ignore=test/hail/methods/test_family_methods.py --ignore=test/hail/methods/test_impex.py" %}
+{% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/methods/test_pca.py --ignore=test/hail/methods/test_skat.py --ignore=test/hail/methods/test_statgen.py" %}
+{% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/methods/relatedness/test_pc_relate.py --ignore=test/hail/table/test_table.py --ignore=test/hail/vds/test_combiner.py" %}
+{% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/vds/test_vds.py --ignore=test/hail/utils/test_hl_hadoop_and_hail_fs.py --ignore=test/hail/extract_intervals/" %}
+
 test:
   imports:
     - hail
@@ -128,7 +144,7 @@ test:
   commands:
     - pip check
     - cd hail/python
-    - pytest -v test --ignore=test/hailtop/ --ignore=test/hail/matrixtable/test_file_formats.py --ignore=test/hail/experimental/test_experimental.py --ignore=test/hail/expr/test_expr.py --ignore=test/hail/matrixtable/test_matrix_table.py --ignore=test/hail/methods/test_family_methods.py --ignore=test/hail/methods/test_impex.py --ignore=test/hail/methods/test_pca.py --ignore=test/hail/methods/test_skat.py --ignore=test/hail/methods/test_statgen.py --ignore=test/hail/methods/relatedness/test_pc_relate.py --ignore=test/hail/table/test_table.py --ignore=test/hail/vds/test_combiner.py --ignore=test/hail/vds/test_vds.py --ignore=test/hail/utils/test_hl_hadoop_and_hail_fs.py --ignore=test/hail/extract_intervals/
+    - pytest -v test -k "not ({{ tests_to_skip }})" {{ testfiles_to_ignore }}
 
 about:
   home: https://hail.is
