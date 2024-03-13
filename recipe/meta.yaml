@@ -22,6 +22,7 @@ build:
   # avro and others a not available for win
   # openjdk and pyspark not available for s390x
   skip: true  # [py<39 or win or py>311 or s390x]
+  skip: true  # [blas_impl == "mkl"]
   entry_points:
     - hailctl = hailtop.hailctl.__main__:main
 
@@ -42,7 +43,6 @@ requirements:
     - openjdk 11.*
     - lz4
     # blas (lapack is brought in along)
-    - mkl-devel  {{ mkl }}  # [blas_impl == "mkl"]
     - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
     # libsimdpp and catch2 unvendored dependencies
     - libsimdpp
@@ -81,7 +81,6 @@ requirements:
     # prerequisites
     - openjdk 11.*
     # blas (lapack is brought in along)
-    - mkl-devel  {{ mkl }}  # [blas_impl == "mkl"]
     - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
     # deps
     - aiodns >=2.0.0,<3
