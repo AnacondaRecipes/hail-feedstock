@@ -80,8 +80,9 @@ requirements:
     - python
     # prerequisites
     - openjdk 11.*
-    # blas (lapack is brought in along)
-    - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
+    # blas, lapack:
+    #   openblas-devel has a run export for libopenblas, 
+    #   and lapack is brought in along.
     # deps
     - aiodns >=2.0.0,<3
     - aiohttp >=3.9,<4
