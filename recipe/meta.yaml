@@ -43,7 +43,6 @@ requirements:
     - openjdk 11.*
     - lz4
     # blas (lapack is brought in along)
-    - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
     # libsimdpp and catch2 unvendored dependencies
     - libsimdpp
     - catch2
