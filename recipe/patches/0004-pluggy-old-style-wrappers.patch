@@ -10,15 +10,12 @@ This patch changes this wrapper to an old-style wrapper.
 
 See: https://pluggy.readthedocs.io/en/stable/index.html#old-style-wrappers
 
----
- hail/python/test/hail/conftest.py | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/hail/python/test/hail/conftest.py b/hail/python/test/hail/conftest.py
-index 3423e6919..b84bb8fea 100644
+index b79230609..450af7ac7 100644
 --- a/hail/python/test/hail/conftest.py
 +++ b/hail/python/test/hail/conftest.py
-@@ -59,12 +59,17 @@ def reset_randomness(init_hail):
+@@ -81,13 +81,17 @@ def reset_randomness(init_hail):
  test_results_key = StashKey[Dict[str, CollectReport]]()
  
  
@@ -29,6 +26,7 @@ index 3423e6919..b84bb8fea 100644
      report = yield
 -    item.stash.setdefault(test_results_key, {})[report.when] = report
 -    return report
+-
 +    try:
 +        rep = report.get_result()
 +    except BaseException as e:
@@ -37,8 +35,5 @@ index 3423e6919..b84bb8fea 100644
 +    item.stash.setdefault(test_results_key, {})[rep.when] = rep
 +    report.force_result(rep)
  
- 
- @pytest.fixture(autouse=True)
--- 
-2.39.1
-
+ @pytest.fixture
+ def reinitialize_hail_for_testing(init_hail, request):

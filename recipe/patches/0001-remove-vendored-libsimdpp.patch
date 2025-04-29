@@ -3,15 +3,11 @@ From: Lorenzo Pirritano <lpirritano@anaconda.com>
 Date: Mon, 4 Mar 2024 14:29:24 -0600
 Subject: [PATCH] remove vendored libsimdpp
 
----
- hail/src/main/c/Makefile | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
-
-diff --git a/hail/src/main/c/Makefile b/hail/src/main/c/Makefile
-index d750ca09e..645d347bc 100644
---- a/hail/src/main/c/Makefile
-+++ b/hail/src/main/c/Makefile
-@@ -25,8 +25,7 @@ CATCH_HEADER_LOCATION := ../resources/include/catch.hpp
+diff --git a/hail/c/Makefile b/hail/c/Makefile
+index edb135acf..a1d1d0ba8 100644
+--- a/hail/c/Makefile
++++ b/hail/c/Makefile
+@@ -25,8 +25,7 @@ CATCH_HEADER_LOCATION := ../hail/resources/include/catch.hpp
  
  # before libsimdpp and catch.hpp are downloaded, clang -MG -MM will generate
  # unresolved dependencies
@@ -28,7 +24,7 @@ index d750ca09e..645d347bc 100644
 -CXXFLAGS += $(HAIL_OPT_FLAGS) $(CXXSTD) -I$(LIBSIMDPP) -Wall -Wextra
 +CXXFLAGS += $(HAIL_OPT_FLAGS) $(CXXSTD) -I$(PREFIX)/include/$(LIBSIMDPP) -Wall -Wextra
  CXXFLAGS += -fPIC -ggdb -fno-strict-aliasing
- CXXFLAGS += -I../resources/include -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/$(JAVA_MD)
+ CXXFLAGS += -I../hail/resources/include -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/$(JAVA_MD)
  LIBFLAGS += -fvisibility=default
 @@ -215,11 +214,11 @@ endif
  	echo "CXX is $(CXX)"
@@ -66,6 +62,3 @@ index d750ca09e..645d347bc 100644
  ifeq ($(UNAME_S)-$(UNAME_M),Darwin-arm64)
  $(LIBBOOT_X86_64): $(BUILD_X86_64)/NativeBoot.o
  	@mkdir -p $(dir $@)
--- 
-2.39.1
-
