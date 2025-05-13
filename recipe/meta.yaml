@@ -158,6 +158,7 @@ test:
     - hailtop.batch
   source_files:
     - hail/python/test
+    - hail/python/pytest.ini
   requires:
     - pip
     - pytest
