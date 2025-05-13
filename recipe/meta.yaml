@@ -31,14 +31,20 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
-    - make      # [linux]
+    - make      # [unix]
     - patch     # [not win]
     - m2-patch  # [win]
     - git
+    - git-lfs
+    - build
+    - setuptools
+    - wheel
+    - pytest-runner
   host:
     - python
     - pip
     - setuptools
+    - wheel
     # prerequisites
     - pytest-runner
     - pyspark >=3.5.0,<3.6
