@@ -16,6 +16,8 @@ source:
     - patches/0003-patch-requirements.patch
     - patches/0004-pluggy-old-style-wrappers.patch
     #- patches/0005-patch-spark-3.3.2-to-3.4.1.patch
+    - patches/0006-fix-version_py-in-makefile.patch
+    - patches/0007-disable-build-isolation.patch
 
 build:
   number: 0
