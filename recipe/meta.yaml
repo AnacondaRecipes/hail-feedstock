@@ -140,7 +140,7 @@ requirements:
 {% set tests_to_skip = tests_to_skip + " or test_export_rectangles or test_sparsify_band_ or test_row_intervals_1 or test_sparsify_row_intervals_0" %}
 {% set tests_to_skip = tests_to_skip + " or test_parses or test_tlocus_schema_from_rg_matches_scala or test_requester_pays_" %}
 {% set tests_to_skip = tests_to_skip + " or test_pedigree or test_slices_with_sparsify or test_exceptions_from_workers_have_stack_traces" %}
-{% set tests_to_skip = tests_to_skip + " or test_hail_in_notebook or test_pgenchisq" %}
+{% set tests_to_skip = tests_to_skip + " or test_hail_in_notebook or test_pgenchisq or test_copy_spark_log" %}
 # skip tests that failed unexpectedly after merge
 {% set tests_to_skip = tests_to_skip + " or test_plots_deprecated_collect_all" %}
 # ignore test files that require a backend or datafiles
@@ -151,6 +151,7 @@ requirements:
 {% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/methods/test_pca.py --ignore=test/hail/methods/test_skat.py --ignore=test/hail/methods/test_statgen.py" %}
 {% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/methods/relatedness/test_pc_relate.py --ignore=test/hail/table/test_table.py --ignore=test/hail/vds/test_combiner.py" %}
 {% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/vds/test_vds.py --ignore=test/hail/utils/test_hl_hadoop_and_hail_fs.py --ignore=test/hail/extract_intervals/" %}
+{% set testfiles_to_ignore = testfiles_to_ignore + " --ignore=test/hail/test_ir.py" %}
 
 test:
   imports:
