@@ -1,0 +1,13 @@
+diff --git a/hail/Makefile b/hail/Makefile
+index 0535fd668..57983667b 100644
+--- a/hail/Makefile
++++ b/hail/Makefile
+@@ -296,7 +296,7 @@ wheel: $(WHEEL)
+ 
+ $(WHEEL): copy-py-files
+ 	# Clear the build cache before building the wheel
+-	cd build/deploy; rm -rf build; $(HAIL_PYTHON3) -m build -w
++	cd build/deploy; rm -rf build; $(PYTHON) -m build -w -n
+ 
+ # if the DEPLOY_REMOTE flag is not set, then deploy init scripts into a dev-username location
+ ifndef DEPLOY_REMOTE
